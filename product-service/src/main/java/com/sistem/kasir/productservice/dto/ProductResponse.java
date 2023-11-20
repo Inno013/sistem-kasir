@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
@@ -11,9 +12,10 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Component
 public class ProductResponse {
-    private String id;
-    private String name;
-    private String description;
+    private Long productId;
+    private String productName;
+    private String skuCode;
     private BigDecimal price;
 }

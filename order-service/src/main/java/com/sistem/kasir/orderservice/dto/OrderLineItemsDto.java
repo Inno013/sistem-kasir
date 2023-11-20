@@ -1,5 +1,6 @@
 package com.sistem.kasir.orderservice.dto;
 
+import com.sistem.kasir.orderservice.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,8 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderLineItemsDto {
-    private long id;
-    private String skuCode;
-    private BigDecimal price;
+    private Product productId;
+    private BigDecimal subTotal;
     private Integer quantity;
 }

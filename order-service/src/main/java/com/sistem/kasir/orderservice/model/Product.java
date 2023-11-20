@@ -1,4 +1,4 @@
-package com.sistem.kasir.productservice.model;
+package com.sistem.kasir.orderservice.model;
 
 
 import jakarta.persistence.*;

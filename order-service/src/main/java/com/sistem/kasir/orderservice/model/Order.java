@@ -1,22 +1,31 @@
 package com.sistem.kasir.orderservice.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "t_orders")
+@Table(name = "tb_orders")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Component
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long orderId;
     private String orderNumber;
-    @OneToMany(cascade = CascadeType.ALL)
+    @Column(name = "order_date_time")
+    private LocalDate orderDate;
+    private Long adminId;
+    @OneToMany(mappedBy = "orderId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<OrderLineItems> orderLineItemsList;
 
 }

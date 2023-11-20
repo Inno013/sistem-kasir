@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "t_order_line_items")
+@Table(name = "tb_orderItems")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,8 +17,13 @@ import java.math.BigDecimal;
 public class OrderLineItems {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String skuCode;
-    private BigDecimal price;
+    private Long orderItemId;
+    @ManyToOne(targetEntity = Order.class)
+    @JoinColumn(name = "orderId", referencedColumnName = "orderId")
+    private Order orderId;
+    @ManyToOne
+    @JoinColumn(name = "productId", referencedColumnName = "productId")
+    private Product productId;
+    private BigDecimal subTotal;
     private Integer quantity;
 }
