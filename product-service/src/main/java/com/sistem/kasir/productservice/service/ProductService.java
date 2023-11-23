@@ -4,6 +4,7 @@ import com.sistem.kasir.productservice.dto.ProductRequest;
 import com.sistem.kasir.productservice.dto.ProductResponse;
 import com.sistem.kasir.productservice.model.Product;
 import com.sistem.kasir.productservice.repository.ProductRepository;
+import jakarta.ws.rs.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,12 +15,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Transactional
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final ProductResponse productResponse;
-
+    @Transactional
     public void createProduct(ProductRequest productRequest){
         Product product = Product.builder()
                 .productName(productRequest.getProductName())
@@ -28,28 +27,40 @@ public class ProductService {
                 .build();
 
         productRepository.save(product);
-        log.info("Product {} is saved", product.getProductId());
     }
-
+    @Transactional(readOnly = true)
     public List<ProductResponse> getAllProducts() {
         List<Product> products = productRepository.findAll();
 
         return products.stream().map(this::mapToProductResponse).toList();
     }
-
+    @Transactional(readOnly = true)
     public ProductResponse getProductBySkuCode(String skuCode){
         Product product  = productRepository.findBySkuCode(skuCode).orElse(null);
 
         if(product != null){
-            productResponse.setProductId(product.getProductId());
-            productResponse.setProductName(product.getProductName());
-            productResponse.setSkuCode(product.getSkuCode());
-            productResponse.setPrice(product.getPrice());
-
-            return productResponse;
+            return mapToProductResponse(product);
         }else {
             return null;
         }
+    }
+    @Transactional
+    public ProductResponse deleteProduct(ProductRequest productRequest){
+        Product deletedProduct = productRepository.findById(productRequest.getProductId()).orElse(null);
+
+        if (deletedProduct != null) {
+            productRepository.deleteById(productRequest.getProductId());
+        }
+        return mapToProductResponse(deletedProduct);
+
+    }
+    @Transactional
+    public void updateProduct(ProductRequest productRequest){
+        Product product = productRepository.findById(productRequest.getProductId()).orElseThrow(() -> new NotFoundException("Product Not Found"));
+        product.setProductName(productRequest.getProductName());
+        product.setSkuCode(productRequest.getSkuCode());
+        product.setPrice(productRequest.getPrice());
+        productRepository.save(product);
     }
 
     private ProductResponse mapToProductResponse(Product product) {

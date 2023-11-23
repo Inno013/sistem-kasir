@@ -20,6 +20,7 @@
         <module>order-service</module>
         <module>discovery-server</module>
         <module>api-gateway</module>
+        <module>auth-service</module>
     </modules>
 
     <properties>
@@ -54,6 +55,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <image>
+                        <builder>paketobuildpacks/builder-jammy-base:latest</builder>
+                    </image>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
