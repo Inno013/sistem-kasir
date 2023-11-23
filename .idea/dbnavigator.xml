@@ -13,8 +13,8 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="8b2cd242-3474-44c5-92b6-5fc332f4a776">
-      <console name="MySql" type="STANDARD" schema="" session="Main"><![CDATA[select * from  `sistem-kasir`.tb_product inner join `sistem-kasir`.tb_order_items where 
-`sistem-kasir`.tb_product.product_id = `sistem-kasir`.tb_order_items.product_id]]></console>
+      <console name="MySql" type="STANDARD" schema="" session="Main">select * from  `sistem-kasir`.tb_product inner join `sistem-kasir`.tb_order_items where 
+`sistem-kasir`.tb_product.product_id = `sistem-kasir`.tb_order_items.product_id</console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
